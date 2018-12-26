@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script id="vertex-shader" type="x-shader/x-vertex">
+      precision mediump float;
+      
+      attribute vec4 vPosition;
+      attribute vec4 vColor;
+
+      varying vec4 fColor;
+      varying lowp vec4 vPos;
+
+      uniform mat4 modelViewMatrix;
+      uniform mat4 projectionMatrix;
+
+      void main() {
+        gl_Position = projectionMatrix * modelViewMatrix * vPosition;
+        vPos = gl_Position;
+        fColor = vColor;
+      }
+    </script>
+
+    <script id="fragment-shader" type="x-shader/x-fragment">
+      precision mediump float;
+      
+      varying lowp vec4 vPos;
+      varying vec4 fColor;
+      
+      void main() {
+        float sigmoid = 1.0 / (1.0 + exp(-0.2 * vPos.z));
+        vec4 fColor = fColor * sigmoid * 0.8 / 255.0 + 0.1;
+        gl_FragColor = vec4(fColor.r, fColor.g, fColor.b, 1.0);
+      }
+    </script>
+
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <script type="text/javascript" src="../common/webgl-utils.js"></script>
+    <script type="text/javascript" src="../common/initShaders.js"></script>
+    <script type="text/javascript" src="../common/MV.js"></script>
+    <script type="text/javascript" src="superquadrics.js"></script>
+  </head>
+  <body>
+    <canvas id="gl-canvas" width="750" height="750" name="canvas">
+    Oops ... your browser doesn't support the HTML5 canvas element
+    </canvas>
+    
+    <div id="UISettings" class="UIBox">
+      <div id="UISettingsHeader">Settings</div>
+      <div class="break15"></div>
+      <div class="startBox">
+        <div class="columnBox">
+            <label class="container">Ellipsoid
+              <input type="radio" checked="checked" name="radio" id="Ellipsoid">
+              <span class="checkmark"></span>
+            </label>
+            <label class="container">Toroid
+              <input type="radio" name="radio" id="Toroid">
+              <span class="checkmark"></span>
+            </label>
+          </div>
+          <div class="columnBox">
+              <label class="container">Wireframe
+                <input type="radio" checked="checked" name="radio" id="Wireframe">
+                <span class="checkmark"></span>
+              </label>
+              <label class="container">Phong
+                <input type="radio" name="radio" id="Phong">
+                <span class="checkmark"></span>
+              </label>
+              <label class="container">Gouraud
+                  <input type="radio" name="radio" id="Gouraud">
+                  <span class="checkmark"></span>
+                </label>
+            </div>
+      </div>
+      <div class="break15"></div>
+      <div class="break15"></div>
+      <div class="columnBox">
+        <div class="box">
+          <div class="textDiv">
+            Exponent 1:
+          </div>
+          <input type="text" id="e1Text" class="sliderValues" value="1" disabled>
+          <div class="numberDiv">
+            0.5
+            <input id="e1Slider" type="range" min="0.5" max="2.5" step="0.25" value="1" />
+            2.5
+          </div>
+        </div>
+        <div class="break15"></div>
+        <div class="box">
+          <div class="textDiv">
+            Exponent 2:
+          </div>
+          <input type="text" id="e2Text" class="sliderValues" value="1" disabled>
+          <div class="numberDiv">
+              0.5
+              <input id="e2Slider" type="range" min="0.5" max="2.5" step="0.25" value="1" />
+              2.5
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="UICamera" class="UIBox">
+      <div id="UICameraHeader">Camera</div>
+      <div class="break15"></div>
+      <div class="centeredColumnBox">
+        <div class="box">
+          <div class="textDiv">
+            X:
+          </div>
+          <input type="text" id="cameraXText" class="sliderValues" value="0" disabled>
+          <div class="numberDiv">
+            -180
+            <input id="sliderX" type="range" min="-180" max="180" step="5" value="0" />
+            180&nbsp&nbsp
+          </div>
+        </div>
+        <div class="break15"></div>
+        <div class="box">
+          <div class="textDiv">
+            Y:
+          </div>
+          <input type="text" id="cameraYText" class="sliderValues" value="0" disabled>
+          <div class="numberDiv">
+            -180
+            <input id="sliderY" type="range" min="-180" max="180" step="5" value="0" />
+            180&nbsp&nbsp
+          </div>
+        </div>
+        <div class="break15"></div>
+        <div class="box">
+          <div class="textDiv">
+            Z:
+          </div>
+          <input type="text" id="cameraZText" class="sliderValues" value="0" disabled>
+          <div class="numberDiv">
+            -180
+            <input id="sliderZ" type="range" min="-180" max="180" step="5" value="0" />
+            180&nbsp&nbsp
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>

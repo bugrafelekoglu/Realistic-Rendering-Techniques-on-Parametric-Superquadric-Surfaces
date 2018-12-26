@@ -1,0 +1,1 @@
+No need for compiling. You can run the application by double clicking HTML file.

@@ -1,0 +1,262 @@
+* {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 500;
+}
+
+*:focus {
+    outline: none;
+}
+
+.UIBox {
+  border-radius: 25px;
+  display: flex;
+  border: none;
+  justify-content: start;
+  align-items: space-between;
+  flex-direction: column;
+}
+
+.box {
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.startBox {
+  color: white;
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+}
+
+.centeredColumnBox {
+  color: white;
+  display: flex;
+  align-items: space-around;
+  justify-content: space-evenly;
+  flex-direction: column;
+}
+
+.columnBox {
+  color: white;
+  display: flex;
+  align-items: stretch;
+  justify-content: space-around;
+  flex-direction: column;
+}
+
+.sliderValues {
+  background: transparent;
+  border: none;
+  font-size: 16px;
+  width: 30px;
+  color: #fff;
+  padding-left: 5px;
+}
+
+.numberDiv {
+  font-size: 16px;
+}
+
+.textDiv {
+  font-size: 16px;
+}
+
+.button {
+  color: #2164e2;
+  height: 30px;
+  width: 100px;
+  background-color: white;
+  border-radius: 15px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.button:hover {
+  background-color: #113983;
+  color: white;
+}
+
+.button:active  {
+  background-color: #09214b;;
+  color: white;
+}
+
+.titledDiv {
+  border-top: 2px solid #fff;
+  width: 330px;
+  height: auto;
+  padding: 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.titledDiv h1 {
+  color: #fff;
+  text-align: center;
+  margin-top: -15px;
+  line-height: 20px;
+  margin-bottom: -0.1px;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.titledDiv h1 span {
+  background-color: #2164e2;
+  padding: 5px;
+  border-radius: 15px;
+}
+
+.titledBox {
+  border-top: 2px solid #fff;
+  width: 340px;
+  height: auto;
+  padding: 5px 5px 5px 5px;
+  margin-top: 5px;
+}
+
+.titledBox h1 {
+  color: #fff;
+  text-align: center;
+  margin-top: -15px;
+  line-height: 20px;
+  margin-bottom: -0.1px;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.titledBox h1 span {
+  background-color: #2164e2;
+  padding: 5px;
+  border-radius: 15px;
+}
+
+.break15 {
+  height: 15px;
+}
+
+.break5 {
+  height: 5px;
+}
+
+#UISettings {
+  width: 330px;
+  height: 300px;
+  padding: 15px 15px 5px;
+  position: absolute;
+  text-align: center;
+  top: 8px;
+  left: 770px;
+  background-color: #4b4b4b;
+}
+
+#UISettingsHeader {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-radius: 25px;
+  cursor: move;
+  background-color: #ffffff;
+  color: #4b4b4b;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+#UICamera {
+  width: 300px;
+  height: 200px;
+  padding: 15px 15px 5px;
+  position: absolute;
+  text-align: center;
+  top: 770px;
+  left: 8px;
+  background-color: #4b4b4b;
+}
+
+#UICameraHeader {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-radius: 25px;
+  cursor: move;
+  background-color: #ffffff;
+  color: #4b4b4b;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+canvas {
+  border: 1px #424242;
+  border-style: solid;
+}
+
+body {
+  background-color: #000;
+}
+
+/* Customize the label (the container) */
+.container {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default radio button */
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom radio button */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #eee;
+  border-radius: 50%;
+}
+
+/* On mouse-over, add a grey background color */
+.container:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* When the radio button is checked, add a blue background */
+.container input:checked ~ .checkmark {
+  background-color: #2196F3;
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the indicator (dot/circle) */
+.container .checkmark:after {
+  top: 9px;
+  left: 9px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: white;
+}
