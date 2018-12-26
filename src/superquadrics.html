@@ -6,30 +6,34 @@
       
       attribute vec4 vPosition;
       attribute vec4 vColor;
+      attribute vec4 vNormal;
 
+      varying vec4 fNormal;
       varying vec4 fColor;
       varying lowp vec4 vPos;
 
       uniform mat4 modelViewMatrix;
       uniform mat4 projectionMatrix;
 
-      void main() {
+      void main()
+      {
         gl_Position = projectionMatrix * modelViewMatrix * vPosition;
         vPos = gl_Position;
         fColor = vColor;
+        fNormal = vNormal;
       }
     </script>
 
     <script id="fragment-shader" type="x-shader/x-fragment">
       precision mediump float;
       
-      varying lowp vec4 vPos;
+      varying vec4 fNormal;
       varying vec4 fColor;
+      varying lowp vec4 vPos;
       
-      void main() {
-        float sigmoid = 1.0 / (1.0 + exp(-0.2 * vPos.z));
-        vec4 fColor = fColor * sigmoid * 0.8 / 255.0 + 0.1;
-        gl_FragColor = vec4(fColor.r, fColor.g, fColor.b, 1.0);
+      void main() 
+      {
+        gl_FragColor = vec4(1.2 + fNormal.xyz, 1.0);
       }
     </script>
 
@@ -49,42 +53,42 @@
       <div class="break15"></div>
       <div class="startBox">
         <div class="columnBox">
-            <label class="container">Ellipsoid
-              <input type="radio" checked="checked" name="radio" id="Ellipsoid">
-              <span class="checkmark"></span>
-            </label>
-            <label class="container">Toroid
-              <input type="radio" name="radio" id="Toroid">
-              <span class="checkmark"></span>
-            </label>
-          </div>
-          <div class="columnBox">
-              <label class="container">Wireframe
-                <input type="radio" checked="checked" name="radio" id="Wireframe">
-                <span class="checkmark"></span>
-              </label>
-              <label class="container">Phong
-                <input type="radio" name="radio" id="Phong">
-                <span class="checkmark"></span>
-              </label>
-              <label class="container">Gouraud
-                  <input type="radio" name="radio" id="Gouraud">
-                  <span class="checkmark"></span>
-                </label>
-            </div>
+          <label class="container">Ellipsoid
+            <input type="radio" checked="checked" name="radioObject" id="Ellipsoid">
+            <span class="checkmark"></span>
+          </label>
+          <label class="container">Hyperboloid
+            <input type="radio" name="radioObject" id="Hyperboloid">
+            <span class="checkmark"></span>
+          </label>
+        </div>
+        <div class="columnBox">
+          <label class="container">Wireframe
+            <input type="radio" checked="checked" name="radioShader" id="Wireframe">
+            <span class="checkmark"></span>
+          </label>
+          <label class="container">Phong
+            <input type="radio" name="radioShader" id="Phong">
+            <span class="checkmark"></span>
+          </label>
+          <label class="container">Gouraud
+            <input type="radio" name="radioShader" id="Gouraud">
+            <span class="checkmark"></span>
+          </label>
+        </div>
       </div>
       <div class="break15"></div>
-      <div class="break15"></div>
+      <div class="break5"></div>
       <div class="columnBox">
         <div class="box">
           <div class="textDiv">
             Exponent 1:
           </div>
-          <input type="text" id="e1Text" class="sliderValues" value="1" disabled>
+          <input type="text" id="e1Text" class="sliderValues" value="3" disabled>
           <div class="numberDiv">
-            0.5
-            <input id="e1Slider" type="range" min="0.5" max="2.5" step="0.25" value="1" />
-            2.5
+            0.25
+            <input id="e1Slider" type="range" min="0.25" max="5.0" step="0.25" value="3.0" />
+            5.0
           </div>
         </div>
         <div class="break15"></div>
@@ -92,11 +96,50 @@
           <div class="textDiv">
             Exponent 2:
           </div>
-          <input type="text" id="e2Text" class="sliderValues" value="1" disabled>
+          <input type="text" id="e2Text" class="sliderValues" value="3" disabled>
           <div class="numberDiv">
-              0.5
-              <input id="e2Slider" type="range" min="0.5" max="2.5" step="0.25" value="1" />
-              2.5
+              0.25
+              <input id="e2Slider" type="range" min="0.25" max="5.0" step="0.25" value="3.0" />
+              5.0
+            </div>
+        </div>
+      </div>
+      <div class="break15"></div>
+      <div class="break5"></div>
+      <div class="columnBox">
+        <div class="box">
+          <div class="textDiv">
+            Scale X (a1):
+          </div>
+          <input type="text" id="a1Text" class="sliderValues" value="0.5" disabled>
+          <div class="numberDiv">
+            0.1
+            <input id="a1Slider" type="range" min="0.1" max="1.0" step="0.1" value="0.5" />
+            1.0
+          </div>
+        </div>
+        <div class="break15"></div>
+        <div class="box">
+          <div class="textDiv">
+            Scale Y (a2):
+          </div>
+          <input type="text" id="a2Text" class="sliderValues" value="0.5" disabled>
+          <div class="numberDiv">
+              0.1
+              <input id="a2Slider" type="range" min="0.1" max="1.0" step="0.1" value="0.5" />
+              1.0
+            </div>
+        </div>
+        <div class="break15"></div>
+        <div class="box">
+          <div class="textDiv">
+            Scale Z (a3):
+          </div>
+          <input type="text" id="a3Text" class="sliderValues" value="0.5" disabled>
+          <div class="numberDiv">
+              0.1
+              <input id="a3Slider" type="range" min="0.1" max="1.0" step="0.1" value="0.5" />
+              1.0
             </div>
         </div>
       </div>
