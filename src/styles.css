@@ -3,9 +3,9 @@
   font-weight: 500;
 }
 
-*:focus {
-    outline: none;
-}
+*:focus {outline: none;}
+.grab {cursor: -webkit-grab; cursor: grab;}
+.grabbing {cursor: -webkit-grabbing; cursor: grabbing;}
 
 .UIBox {
   border-radius: 25px;
@@ -187,8 +187,8 @@
 }
 
 canvas {
-  border: 1px #424242;
-  border-style: solid;
+  cursor: -webkit-grab; 
+  cursor: grab;
 }
 
 body {

@@ -72,7 +72,6 @@ window.onload = function init() {
 
   // Draggable UI Elements
   dragElement(document.getElementById("UISettings"));
-  dragElement(document.getElementById("UICamera"));
 
   // Configure WebGL
   gl.viewport(0, 0, canvas.width, canvas.width);
@@ -198,9 +197,9 @@ function generateHyperboloidVertices(e1, e2) {
   loopSizeH = 0;
   for(var u = -1.0; u < 1.0; u += 0.01) {
     for(var v = -1.0; v < 1.0; v += 0.01) {
-      var x = a1 * Math.pow(1/Math.cos(u * (Math.PI/2)), e1) * Math.pow(Math.cos(v * Math.PI), e2);
-      var y = a2 * Math.pow(1/Math.cos(u * (Math.PI/2)), e1) * Math.pow(Math.sin(v * Math.PI), e2);
-      var z = a3 * Math.pow(Math.tan(u * (Math.PI/2)), e1);
+      var x = a1 * Math.pow(1/Math.cos(u * (Math.PI)), e1) * Math.pow(Math.cos(v * Math.PI), e2);
+      var y = a2 * Math.pow(1/Math.cos(u * (Math.PI)), e1) * Math.pow(Math.sin(v * Math.PI), e2);
+      var z = a3 * Math.pow(Math.tan(u * (Math.PI)), e1);
 
       verticesH.push(vec4(x, y, z, 1));
     }
@@ -216,9 +215,9 @@ function generateHyperboloidNormals(e1, e2) {
 
   for(var u = -1.0; u < 1.0; u += 0.01) {
     for(var v = -1.0; v < 1.0; v += 0.01) {
-      var x = (1 / a1) * Math.pow(1/Math.cos(u * (Math.PI/2)), 2-e1) * Math.pow(Math.cos(v * Math.PI), 2-e2);
-      var y = (1 / a2) * Math.pow(1/Math.cos(u * (Math.PI/2)), 2-e1) * Math.pow(Math.sin(v * Math.PI), 2-e2);
-      var z = (1 / a3) * Math.pow(Math.tan(u * (Math.PI/2)), 2-e1);
+      var x = (1 / a1) * Math.pow(1/Math.cos(u * (Math.PI)), 2-e1) * Math.pow(Math.cos(v * Math.PI), 2-e2);
+      var y = (1 / a2) * Math.pow(1/Math.cos(u * (Math.PI)), 2-e1) * Math.pow(Math.sin(v * Math.PI), 2-e2);
+      var z = (1 / a3) * Math.pow(Math.tan(u * (Math.PI)), 2-e1);
 
       normalsH.push(vec4(x, y, z, 0));
     }
@@ -276,17 +275,23 @@ function camera() {
     prevX = 2*event.clientX/canvas.width-1;
     prevY = 2*(canvas.height-event.clientY)/canvas.height-1;
     isCameraMoving = true;
+    canvas.style.cursor = "grabbing";
   }
 
   canvas.onmouseup = function(event) {
     isCameraMoving = false;
     prevTheta = theta;
     prevPhi = phi;
+    canvas.style.cursor = "grab";
   }
 
   canvas.onmousemove = function(event) {
     if(isCameraMoving) {
       cameraMovement(event);
+      canvas.style.cursor = "grabbing";
+    }
+    else {
+      canvas.style.cursor = "grab";
     }
   }
 
