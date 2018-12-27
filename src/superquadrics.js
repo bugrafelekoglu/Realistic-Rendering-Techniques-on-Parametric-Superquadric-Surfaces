@@ -25,6 +25,7 @@ var modelViewMatrix;
 var modelViewMatrixLoc;
 var projectionMatrix;
 var projectionMatrixLoc;
+var indexBuffer;
 
 // Global variables
 var objectMode = ELLIPSOID;
@@ -89,8 +90,8 @@ window.onload = function init() {
   modelViewMatrixLoc = gl.getUniformLocation(program, "modelViewMatrix");
   projectionMatrixLoc = gl.getUniformLocation(program, "projectionMatrix");
 
-  generateEllipsoid(e1, e2);
-  generateHyperboloid(e1, e2);
+  generateEllipsoid();
+  generateHyperboloid();
   camera();
   radios();
   sliders();
@@ -112,36 +113,56 @@ function render() {
   modelViewMatrixLoc = gl.getUniformLocation(program, "modelViewMatrix");
   projectionMatrixLoc = gl.getUniformLocation(program, "projectionMatrix");
   
-  drawObject(objectMode);
+  drawObject();
 
   requestAnimFrame(render);
 }
 
-function generateEllipsoid(e1, e2) {
-  generateEllipsoidVertices(e1, e2);
-  generateEllipsoidNormals(e1, e2);
+function generateEllipsoid() {
+  generateEllipsoidVertices();
+  generateEllipsoidNormals();
   generateEllipsoidIndices();
 }
 
-function generateHyperboloid(e1, e2) {
-  generateHyperboloidVertices(e1, e2);
-  generateHyperboloidNormals(e1, e2);
+function generateHyperboloid() {
+  generateHyperboloidVertices();
+  generateHyperboloidNormals();
   generateHyperboloidIndices();
 }
 
-function drawObject(objectMode) {
+function drawObject() {
   if(objectMode === ELLIPSOID) {
     processBuffers(vec4(0.0, 0.0, 0.0, 1.0), verticesE, normalsE, indicesE);
+
+    if(shaderMode === WIREFRAME) {
+      gl.drawElements(gl.LINE_STRIP, indicesE.length, gl.UNSIGNED_SHORT, indexBuffer);  
+    }
+    else if(shaderMode === PHONG) {
+      gl.drawElements(gl.TRIANGLE_STRIP, indicesE.length, gl.UNSIGNED_SHORT, indexBuffer);  
+    }
+    else {
+      gl.drawElements(gl.TRIANGLE_STRIP, indicesE.length, gl.UNSIGNED_SHORT, indexBuffer);  
+    }
   }
   else {
     processBuffers(vec4(0.0, 0.0, 0.0, 1.0), verticesH, normalsH, indicesH);
+
+    if(shaderMode === WIREFRAME) {
+      gl.drawElements(gl.LINE_STRIP, indicesH.length, gl.UNSIGNED_SHORT, indexBuffer);  
+    }
+    else if(shaderMode === PHONG) {
+      gl.drawElements(gl.TRIANGLE_STRIP, indicesH.length, gl.UNSIGNED_SHORT, indexBuffer);  
+    }
+    else {
+      gl.drawElements(gl.TRIANGLE_STRIP, indicesH.length, gl.UNSIGNED_SHORT, indexBuffer);  
+    }
   }
 }
 
 /***************************************************
   Ellipsoid Vertex Generator
 ****************************************************/
-function generateEllipsoidVertices(e1, e2) {
+function generateEllipsoidVertices() {
   verticesE = [];
 
   loopSizeE = 0;
@@ -160,7 +181,7 @@ function generateEllipsoidVertices(e1, e2) {
 /***************************************************
   Ellipsoid Normal Generator
 ****************************************************/
-function generateEllipsoidNormals(e1, e2) {
+function generateEllipsoidNormals() {
   normalsE = [];
 
   for(var u = -1.0; u < 1.0; u += 0.01) {
@@ -191,7 +212,7 @@ function generateEllipsoidIndices() {
 /***************************************************
   Hyperboloid Vertex Generator
 ****************************************************/
-function generateHyperboloidVertices(e1, e2) {
+function generateHyperboloidVertices() {
   verticesH = [];
 
   loopSizeH = 0;
@@ -210,7 +231,7 @@ function generateHyperboloidVertices(e1, e2) {
 /***************************************************
   Hyperboloid Normal Generator
 ****************************************************/
-function generateHyperboloidNormals(e1, e2) {
+function generateHyperboloidNormals() {
   normalsH = [];
 
   for(var u = -1.0; u < 1.0; u += 0.01) {
@@ -238,6 +259,8 @@ function generateHyperboloidIndices() {
   }
 }
 
+var theta = 0;
+var phi = 0;
 var prevX;
 var prevY;
 var prevTheta = 0;
@@ -408,11 +431,9 @@ function processBuffers(color, vertices, normals, indices) {
   gl.vertexAttribPointer(vNormal, 4, gl.FLOAT, false, 0, 0);
   gl.enableVertexAttribArray(vNormal);
 
-  var indexBuffer = gl.createBuffer();
+  indexBuffer = gl.createBuffer();
   gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
   gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(indices), gl.STATIC_DRAW);
-
-  gl.drawElements(gl.TRIANGLE_STRIP, indices.length, gl.UNSIGNED_SHORT, indexBuffer);
 }
 
 /*******************************************************************
